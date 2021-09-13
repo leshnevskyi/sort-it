@@ -1,3 +1,8 @@
+interface Bar {
+  value: number;
+  id: string;
+}
+
 interface Change<T> {
   comparisonIndexes: number[],
   swappingIndexes: number[] | null,

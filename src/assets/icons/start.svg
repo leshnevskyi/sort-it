@@ -1,0 +1,12 @@
+<svg 
+  width='60' 
+  height='60' 
+  viewBox='0 0 60 60' 
+>
+  <path
+    d='M46.8 30L19.8001 45.5885L19.8001 14.4115L46.8 30Z' 
+    fill='none'
+    stroke='var(--icon-color, --text-color)'
+    stroke-width='var(--stroke-width)'
+  />
+</svg>

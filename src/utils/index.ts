@@ -1,17 +1,13 @@
 import {random} from 'lodash-es';
-import {nanoid} from 'nanoid';
 
-function generateRandomBarArray(
+function generateRandomNumbers(
   arrayLength: number,
-  lowerBound: number = 0,
+  lowerBound: number = 0.05,
   upperBound: number = 1,
-): Bar[] {
+): number[] {
   return [...Array(arrayLength)].map(() => {
-    return {
-      id: nanoid(), 
-      value: random(lowerBound, upperBound, true)
-    };
+    return random(lowerBound, upperBound, true);
   });
 }
 
-export {generateRandomBarArray};
+export {generateRandomNumbers};

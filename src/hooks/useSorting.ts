@@ -1,10 +1,10 @@
-import {useEffect, useContext} from 'react';
+import {useContext} from 'react';
 
 import {SortingContext, SortingStage} from 'context/sorting';
 import {bubbleSort, selectionSort} from 'algorithms';
 
 import {SortingAlgorithm} from 'algorithms';
-import {generateRandomBarArray} from 'utils';
+import {generateRandomNumbers} from 'utils';
 
 function useSorting() {
   const sortingContextValue = useContext(SortingContext);
@@ -18,13 +18,13 @@ function useSorting() {
   const {
     array, setArray,
     arrayLength,
-    setCurrentChange, 
-    sortingStage, setSortingStage,
+    setChangeLog,
+    setCurrentIteration, 
+    setSortingStage,
     sortingAlgorithm, 
-    sortingSpeed
   } = sortingContextValue;
   
-  let sortFn: SortFn<Bar> = bubbleSort;
+  let sortFn: SortFn<number> = bubbleSort;
 
   switch (sortingAlgorithm) {
     case SortingAlgorithm.BubbleSort: {
@@ -40,45 +40,25 @@ function useSorting() {
     }
   }
 
-  const compareFn = (firstEl: Bar, secondEl: Bar) => {
-    return firstEl.value - secondEl.value;
+  const compareFn = (firstEl: number, secondEl: number) => {
+    return firstEl - secondEl;
   }
 
   const [, changeLog] = sortFn(array, compareFn, true) as [
-    Bar[], ChangeLog<Bar>
+    number[], ChangeLog<number>
   ];
 
-  useEffect(() => {
-    if (sortingStage !== SortingStage.Started) return;
-    
-    const changeCount = changeLog.length;
-    const maxIterationDelay = 300;
-    const iterationDelay = maxIterationDelay * sortingSpeed;
-    let iteration = 0;
-
-    const timeoutId = setTimeout(function nextChange() {
-      if (iteration === changeCount) {
-        setSortingStage(SortingStage.Finished);
-
-        return;
-      };
-
-      setCurrentChange(changeLog[iteration++]);
-      setTimeout(nextChange, iterationDelay);
-    }, iterationDelay);
-
-    return () => clearTimeout(timeoutId);
-  }, [
-    sortingStage, changeLog, setCurrentChange, setSortingStage, sortingSpeed
-  ]);
-
   function startSorting() {
-    setSortingStage(SortingStage.Started);
+    setSortingStage(SortingStage.InProgress);
+    setChangeLog(changeLog);
+    setCurrentIteration(null);
   }
 
   function regenerateArray() {
-    setArray(generateRandomBarArray(arrayLength, 0.05, 1));
+    setArray(generateRandomNumbers(arrayLength));
     setSortingStage(SortingStage.Idle);
+    setChangeLog(null);
+    setCurrentIteration(null);
   }
 
   return {...sortingContextValue, startSorting, regenerateArray};

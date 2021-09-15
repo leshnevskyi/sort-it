@@ -4,9 +4,9 @@ interface Bar {
 }
 
 interface Change<T> {
-  comparisonIndexes: number[],
-  swappingIndexes: number[] | null,
-  array: T[],
+  comparisonIndexes: number[];
+  swappingIndexes: number[] | null;
+  array: T[];
 }
 
 type ChangeLog<T> = Change<T>[];

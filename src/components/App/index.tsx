@@ -1,4 +1,8 @@
-import {BrowserRouter as Router} from 'react-router-dom';
+import {
+  BrowserRouter as Router, 
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import GlobalStyle from 'components/GlobalStyle';
 import {ContentWrapper} from './styled';
@@ -13,6 +17,9 @@ const App = () => {
     <>
       <GlobalStyle/>
       <Router>
+        <Route exact path='/'>
+          <Redirect to='/bubble-sort'/>
+        </Route>
         <SortingProvider>
           <ContentWrapper algoName={algoNames[0]}>
             <NavBar/>

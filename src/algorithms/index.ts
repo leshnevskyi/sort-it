@@ -25,7 +25,7 @@ const sortingAlgorithms: SortingAlgorithmData[] = [
   {name: 'counting'},
 ];
 
-const urls = sortingAlgorithms.map(algorithm => `${algorithm.name}-sort`);
+const urls = sortingAlgorithms.map(algorithm => `/${algorithm.name}-sort`);
 
 urls.forEach((url, index) => sortingAlgorithms[index].url = url);
 

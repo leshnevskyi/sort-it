@@ -14,7 +14,7 @@ const ContentWrapper = styled.div<ContentWrapperProps>`
   display: grid;
   grid: auto 70% / 1fr;
   align-items: space-between;
-  overflow-y: hidden;
+  overflow: hidden;
 
   &::before, &::after {
     content: '${props => capitalize(props.algoName)} Sort';

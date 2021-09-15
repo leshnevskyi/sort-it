@@ -133,8 +133,6 @@ const Bars = () => {
         && currentIteration !== null 
         && changeLog[currentIteration]?.comparisonIndexes.includes(index)
       );
-      console.log(sortingStage, changeLog, currentIteration);
-      
 
       const bar = new Bar(
         position.x, position.y, barWidth, barHeight, isCompared

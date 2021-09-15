@@ -10,7 +10,7 @@ import {Bars} from 'components/bars';
 import {NavBar, StatusBar} from 'components/layout';
 import {SortingProvider} from 'context/sorting';
 
-import {algoNames} from 'algorithms';
+import {sortingAlgorithms} from 'algorithms';
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
           <Redirect to='/bubble-sort'/>
         </Route>
         <SortingProvider>
-          <ContentWrapper algoName={algoNames[0]}>
+          <ContentWrapper algoName={sortingAlgorithms[0].name}>
             <NavBar/>
             <Bars/>
           </ContentWrapper>

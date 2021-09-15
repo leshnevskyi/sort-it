@@ -5,23 +5,16 @@ import {
   EmphasizedText
 } from './styled';
 
-const algoNames = [
-  'bubble',
-  'selection',
-  'shell',
-  'merge',
-  'quick',
-  'counting',
-];
+import {sortingAlgorithms} from 'algorithms';
 
 const NavBar = () => {
-  const renderedNavLinks = algoNames.map(algoName => {
+  const renderedNavLinks = sortingAlgorithms.map(sortingAlgorithm => {
     return (
       <NavLink 
-        key={algoName} 
-        to={`${algoName}-sort`}
+        key={sortingAlgorithm.name} 
+        to={sortingAlgorithm.url || '/'}
       >
-        <EmphasizedText>{algoName}</EmphasizedText>&nbsp;sort
+        <EmphasizedText>{sortingAlgorithm.name}</EmphasizedText>&nbsp;sort
       </NavLink>
     );
   });

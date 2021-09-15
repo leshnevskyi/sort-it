@@ -1,3 +1,6 @@
+import {useEffect} from 'react';
+import {useLocation} from 'react-router';
+
 import {
   NavBarWrapper, 
   NavLinkList, 
@@ -6,6 +9,7 @@ import {
 } from './styled';
 
 import {sortingAlgorithms} from 'algorithms';
+import {useSorting} from 'hooks';
 
 const NavBar = () => {
   const renderedNavLinks = sortingAlgorithms.map(sortingAlgorithm => {
@@ -17,6 +21,15 @@ const NavBar = () => {
         <EmphasizedText>{sortingAlgorithm.name}</EmphasizedText>&nbsp;sort
       </NavLink>
     );
+  });
+
+  const locationUrl = useLocation().pathname;
+  const {setSortingAlgorithmIndex} = useSorting();
+
+  useEffect(() => {
+    setSortingAlgorithmIndex(sortingAlgorithms.findIndex(sortingAlgorithm => {
+      return sortingAlgorithm.url === locationUrl;
+    }));
   });
 
   return (  

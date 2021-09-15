@@ -1,9 +1,8 @@
 import {useContext} from 'react';
 
 import {SortingContext, SortingStage} from 'context/sorting';
-import {bubbleSort, selectionSort} from 'algorithms';
+import {sortingAlgorithms} from 'algorithms';
 
-import {SortingAlgorithm} from 'algorithms';
 import {generateRandomNumbers} from 'utils';
 
 function useSorting() {
@@ -21,24 +20,10 @@ function useSorting() {
     setChangeLog,
     setCurrentIteration, 
     setSortingStage,
-    sortingAlgorithm, 
+    sortingAlgorithmIndex,
   } = sortingContextValue;
   
-  let sortFn: SortFn<number> = bubbleSort;
-
-  switch (sortingAlgorithm) {
-    case SortingAlgorithm.BubbleSort: {
-      sortFn = bubbleSort;
-
-      break;
-    }
-    
-    case SortingAlgorithm.SelectionSort: {
-      sortFn = selectionSort;
-
-      break;
-    }
-  }
+  let sortFn: SortFn<number> = sortingAlgorithms[sortingAlgorithmIndex].sortFn!;
 
   const compareFn = (firstEl: number, secondEl: number) => {
     return firstEl - secondEl;

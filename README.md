@@ -1,4 +1,4 @@
 # Sort It!
 
 A demo project that visually features popular sorting algorithms.\
-Implemented with JavaScript leveraging React.
+Implemented with TypeScript leveraging React.

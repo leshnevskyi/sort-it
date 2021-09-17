@@ -1,5 +1,6 @@
 import bubbleSort from './bubbleSort';
 import selectionSort from './selectionSort';
+import shellSort from './shellSort';
 
 enum SortingAlgorithm {
   BubbleSort,
@@ -19,7 +20,7 @@ interface SortingAlgorithmData {
 const sortingAlgorithms: SortingAlgorithmData[] = [
   {name: 'bubble', sortFn: bubbleSort},
   {name: 'selection', sortFn: selectionSort},
-  {name: 'shell'},
+  {name: 'shell', sortFn: shellSort},
   {name: 'merge'},
   {name: 'quick'},
   {name: 'counting'},
@@ -34,4 +35,5 @@ export {
   sortingAlgorithms,
   bubbleSort,
   selectionSort,
+  shellSort,
 };

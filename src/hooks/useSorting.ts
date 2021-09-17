@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useContext, useMemo} from 'react';
 
 import {SortingContext, SortingStage} from 'context/sorting';
 import {sortingAlgorithms} from 'algorithms';
@@ -29,9 +29,9 @@ function useSorting() {
     return firstEl - secondEl;
   }
 
-  const [, changeLog] = sortFn(array, compareFn, true) as [
+  const [, changeLog] = useMemo(() => sortFn(array, compareFn, true) as [
     number[], ChangeLog<number>
-  ];
+  ], [sortFn, array]);
 
   function startSorting() {
     setSortingStage(SortingStage.InProgress);

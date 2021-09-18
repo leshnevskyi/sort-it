@@ -1,0 +1,19 @@
+<svg 
+  width='16' 
+  height='16' 
+  viewBox='0 0 16 16' 
+  fill='none' 
+  xmlns='http://www.w3.org/2000/svg'
+>
+  <rect width='2' height='5' x='1' y='11' fill='url(#gradient)'/>
+  <rect width='2' height='15' x='4' y='1' fill='url(#gradient)'/>
+  <rect width='2' height='10' x='7' y='6' fill='url(#gradient)'/>
+  <rect width='2' height='13' x='10' y='3' fill='url(#gradient)'/>
+  <rect width='2' height='8' x='13' y='8' fill='url(#gradient)'/>
+  <defs>
+    <linearGradient id='gradient' gradientTransform='rotate(90)'>
+      <stop offset='0%' stop-color='#355864'/>
+      <stop offset='100%' stop-color='#355864' stop-opacity='0'/>
+    </linearGradient>
+  </defs>
+</svg>

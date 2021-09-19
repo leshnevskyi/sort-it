@@ -5,12 +5,9 @@ import {
 } from 'react-router-dom';
 
 import GlobalStyle from 'components/GlobalStyle';
-import {ContentWrapper} from './styled';
 import {Bars} from 'components/bars';
-import {NavBar, StatusBar} from 'components/layout';
+import {ContentWrapper, NavBar, StatusBar} from 'components/layout';
 import {SortingProvider} from 'context/sorting';
-
-import {sortingAlgorithms} from 'algorithms';
 
 const App = () => {
   return (
@@ -21,7 +18,7 @@ const App = () => {
           <Redirect to='/bubble-sort'/>
         </Route>
         <SortingProvider>
-          <ContentWrapper algoName={sortingAlgorithms[0].name}>
+          <ContentWrapper>
             <NavBar/>
             <Bars/>
           </ContentWrapper>

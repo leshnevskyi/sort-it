@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     --font-size-400: 2rem;
     --font-size-500: 2.3rem;
     --font-size-600: 2.6rem;
-    --font-size-1000: 25rem;
+    --font-size-1000: 27rem;
 
     --icon-color: ${colors.pickledBluewood};
     --stroke-width: 4;

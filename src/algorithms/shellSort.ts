@@ -1,35 +1,23 @@
-import {defaultCompareFn} from './utils';
+import type {SortFnContext} from './utils';
+import createSortFn from './utils';
 
-const shellSort = <T>(
-  [...arr]: T[], 
-  compareFn: CompareFn<T> = defaultCompareFn,
-  logChanges: boolean = false,
-): T[] | [T[], ChangeLog<T>] => {
-  let len = arr.length;
-  const changeLog: ChangeLog<T> | undefined = logChanges ? [] : undefined;
+function shellSortAlgorithm<T>(this: SortFnContext<T>) {
+  const len = this.array.length;
 
   for (let gap = Math.floor(len / 2); gap != 0; gap = Math.floor(gap / 2)) {
     for (let i = gap; i < len; i++) {
-      let temp = arr[i];
+      const stashedEl = this.stash(i);
       let j;
-      let elementsAreSwapped = false;
-
-      for (j = i; j >= gap && compareFn(arr[j - gap], temp) > 0; j -= gap) {
-        arr[j] = arr[j - gap];
-        elementsAreSwapped = true;
+      
+      for (j = i; j >= gap && this.compare(j - gap, stashedEl) > 0; j -= gap) {
+        this.replace(j, j - gap);
       }
 
-      logChanges && changeLog!.push({
-        comparisonIndexes: [j, j + 1],
-        swappingIndexes: elementsAreSwapped ? [j, j + 1] : null,
-        array: [...arr],
-      });
-
-      arr[j] = temp;
+      this.replace(j, stashedEl.unstash());
     }
   }
-
-  return logChanges ? [arr, changeLog!] : arr;
 }
+
+const shellSort = createSortFn(shellSortAlgorithm);
 
 export default shellSort;

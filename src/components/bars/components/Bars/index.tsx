@@ -61,14 +61,14 @@ const Bars = () => {
   const {
     array, 
     arrayLength: barCount,
-    changeLog,  
+    sortingLog,  
     currentIteration, 
     sortingStage,
   } = useSorting();
   const randomNumbers = sortingStage !== SortingStage.Idle 
-    && changeLog 
+    && sortingLog 
     && currentIteration
-    ? changeLog[currentIteration].array : array;
+    ? sortingLog[currentIteration].array : array;
 
   const canvasRef = useRef<
     HTMLCanvasElement & {
@@ -129,9 +129,11 @@ const Bars = () => {
 
       const isCompared = Boolean(
         sortingStage === SortingStage.InProgress 
-        && changeLog !== null 
+        && sortingLog !== null 
         && currentIteration !== null 
-        && changeLog[currentIteration]?.comparisonIndexes.includes(index)
+        && sortingLog[currentIteration]?.comparedElements?.some(el => {
+          return el.index === index;
+        })
       );
 
       const bar = new Bar(

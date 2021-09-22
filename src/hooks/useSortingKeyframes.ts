@@ -9,14 +9,14 @@ function useSortingKeyframes() {
     setSortingStage,
     currentIteration,
     setCurrentIteration,
-    changeLog,  
+    sortingLog,  
     sortingSpeed,
   } = useSorting();
   
   useEffect(() => {
-    if (!changeLog) return;
+    if (!sortingLog) return;
     
-    const changeCount = changeLog.length;
+    const changeCount = sortingLog.length;
     const maxIterationDelay = 100;
     const iterationDelay = maxIterationDelay * sortingSpeed;
     const maxIteration = changeCount - 1;

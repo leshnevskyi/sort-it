@@ -1,3 +1,5 @@
+import type {SortFn} from './utils';
+
 import bubbleSort from './bubbleSort';
 import selectionSort from './selectionSort';
 import shellSort from './shellSort';
@@ -13,22 +15,18 @@ enum SortingAlgorithm {
 
 interface SortingAlgorithmData {
   name: string;
-  sortFn?: SortFn<number>;
-  url?: string;
+  sortFn: SortFn;
+  url: string;
 }
 
 const sortingAlgorithms: SortingAlgorithmData[] = [
   {name: 'bubble', sortFn: bubbleSort},
   {name: 'selection', sortFn: selectionSort},
   {name: 'shell', sortFn: shellSort},
-  {name: 'merge'},
-  {name: 'quick'},
-  {name: 'counting'},
-];
-
-const urls = sortingAlgorithms.map(algorithm => `/${algorithm.name}-sort`);
-
-urls.forEach((url, index) => sortingAlgorithms[index].url = url);
+  {name: 'merge', sortFn: shellSort},
+  {name: 'quick', sortFn: shellSort},
+  {name: 'counting', sortFn: shellSort},
+].map(algorithm => ({...algorithm, url: `/${algorithm.name}-sort`}));
 
 export {
   SortingAlgorithm, 

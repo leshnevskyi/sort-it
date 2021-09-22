@@ -1,33 +1,23 @@
-import {defaultCompareFn} from './utils';
+import type {SortFnContext} from './utils';
+import createSortFn from './utils';
 
-const bubbleSort = <T>(
-  [...arr]: T[], 
-  compareFn: CompareFn<T> = defaultCompareFn,
-  logChanges: boolean = false,
-): T[] | [T[], ChangeLog<T>] => {
-  const len = arr.length;
-  const changeLog: ChangeLog<T> | undefined = logChanges ? [] : undefined;
+function bubbleSortAlgorithm<T>(this: SortFnContext<T>) {
+  const len = this.array.length;
 
   for (let i = 0; i < len; i++) {
     let elementsAreSwapped = false;
 
     for (let j = 0; j < len - 1; j++) {
-      if (compareFn(arr[j], arr[j + 1]) > 0) {
+      if (this.compare(j, j + 1) > 0) {
         elementsAreSwapped = true;
-        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        this.swap(j, j + 1);
       }
-      
-      logChanges && changeLog!.push({
-        comparisonIndexes: [j, j + 1],
-        swappingIndexes: elementsAreSwapped ? [j, j + 1] : null,
-        array: [...arr],
-      });
     }
 
     if (!elementsAreSwapped) break;
   }
-
-  return logChanges ? [arr, changeLog!] : arr;
 }
+
+const bubbleSort = createSortFn(bubbleSortAlgorithm);
 
 export default bubbleSort;

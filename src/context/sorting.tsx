@@ -1,7 +1,7 @@
 import {createContext, useState} from 'react';
 
 import {generateRandomNumbers} from 'utils';
-
+import type {SortingSnapshot} from 'algorithms/utils';
 import {SortingAlgorithm} from 'algorithms';
 
 enum SortingStage {
@@ -15,8 +15,10 @@ interface SortingContextValue<T> {
   setArrayLength: React.Dispatch<React.SetStateAction<number>>;
   array: T[];
   setArray: React.Dispatch<React.SetStateAction<number[]>>;
-  changeLog: ChangeLog<number> | null;
-  setChangeLog: React.Dispatch<React.SetStateAction<ChangeLog<number> | null>>;
+  sortingLog: SortingSnapshot<T>[] | null;
+  setSortingLog: React.Dispatch<React.SetStateAction<
+    SortingSnapshot<T>[] | null>
+  >;
   currentIteration: number | null;
   setCurrentIteration: React.Dispatch<React.SetStateAction<number | null>>;
   sortingStage: SortingStage;
@@ -40,8 +42,8 @@ interface SortingProviderProps {
 const SortingProvider = ({children}: SortingProviderProps) => {
   const [arrayLength, setArrayLength] = useState(20);
   const [array, setArray] = useState(generateRandomNumbers(arrayLength));
-  const [changeLog, setChangeLog] = useState<
-    ChangeLog<number> | null
+  const [sortingLog, setSortingLog] = useState<
+    SortingSnapshot<number>[] | null
   >(null);
   const [currentIteration, setCurrentIteration] = useState<number | null>(null);
   const [sortingStage, setSortingStage] = useState(SortingStage.Idle);
@@ -55,7 +57,7 @@ const SortingProvider = ({children}: SortingProviderProps) => {
       value={{
         arrayLength, setArrayLength, 
         array, setArray, 
-        changeLog, setChangeLog, 
+        sortingLog, setSortingLog, 
         currentIteration, setCurrentIteration,
         sortingStage, setSortingStage,
         sortingSpeed, setSortingSpeed,

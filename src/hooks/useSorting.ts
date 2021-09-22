@@ -1,6 +1,7 @@
 import {useContext, useMemo} from 'react';
 
 import {SortingContext, SortingStage} from 'context/sorting';
+import {SortingLog} from 'algorithms/utils';
 import {sortingAlgorithms} from 'algorithms';
 
 import {generateRandomNumbers} from 'utils';
@@ -17,32 +18,43 @@ function useSorting() {
   const {
     array, setArray,
     arrayLength,
-    setChangeLog,
+    setSortingLog,
     setCurrentIteration, 
     setSortingStage,
     sortingAlgorithmIndex,
   } = sortingContextValue;
   
-  let sortFn: SortFn<number> = sortingAlgorithms[sortingAlgorithmIndex].sortFn!;
+  let sortFn = sortingAlgorithms[sortingAlgorithmIndex].sortFn;
 
-  const compareFn = (firstEl: number, secondEl: number) => {
-    return firstEl - secondEl;
-  }
+  const sortingLog = useMemo(() => new SortingLog(array), [array]);
 
-  const [, changeLog] = useMemo(() => sortFn(array, compareFn, true) as [
-    number[], ChangeLog<number>
-  ], [sortFn, array]);
-
+  sortFn.attachListeners({
+    onCompare: (firstEl, secondEl) => sortingLog.add({
+      comparedElements: [firstEl, secondEl],
+    }),
+    onReplace: (index, _, changedArray) => sortingLog.add({
+      // @ts-ignore
+      array: changedArray,
+      replacementIndex: index,
+    }),
+    onSwap: (firstIndex, secondIndex, changedArray) => sortingLog.add({
+      // @ts-ignore
+      array: changedArray,
+      swapIndexes: [firstIndex, secondIndex],
+    }),
+  });
+  
   function startSorting() {
+    sortFn(array);
     setSortingStage(SortingStage.InProgress);
-    setChangeLog(changeLog);
+    setSortingLog(sortingLog.retrieve());
     setCurrentIteration(null);
   }
 
   function regenerateArray() {
     setArray(generateRandomNumbers(arrayLength));
     setSortingStage(SortingStage.Idle);
-    setChangeLog(null);
+    setSortingLog(null);
     setCurrentIteration(null);
   }
 

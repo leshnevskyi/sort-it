@@ -1,7 +1,7 @@
 import {useContext, useMemo} from 'react';
 
 import {SortingContext, SortingStage} from 'context/sorting';
-import {SortingLog} from 'algorithms/utils';
+import {SortingLog, StashableArrayElement} from 'algorithms/utils';
 import {sortingAlgorithms} from 'algorithms';
 
 import {generateRandomNumbers} from 'utils';
@@ -30,7 +30,9 @@ function useSorting() {
 
   sortFn.attachListeners({
     onCompare: (firstEl, secondEl) => sortingLog.add({
-      comparedElements: [firstEl, secondEl],
+      comparedElements: [firstEl, secondEl] as [
+        StashableArrayElement<number>, StashableArrayElement<number>
+      ],
     }),
     onReplace: (index, _, changedArray) => sortingLog.add({
       // @ts-ignore

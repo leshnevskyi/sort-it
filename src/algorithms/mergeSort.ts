@@ -37,7 +37,7 @@ function mergeSortAlgorithm<T>(
       rightPartIndex++;
     } else {
       if (this.array.stash[leftPartIndex] !== null) {
-        this.replace(currElIndex, this.array.stash[leftPartIndex]!);
+        this.replace(currElIndex, leftPartIndex);
         this.array.stash[leftPartIndex] = null;
       }
 
@@ -50,7 +50,7 @@ function mergeSortAlgorithm<T>(
   while (this.array.stash[leftPartIndex] !== null) {
     !sortedElements.includes(this.array[currElIndex])
       && this.stash(currElIndex);
-    this.replace(currElIndex, this.array.stash[leftPartIndex]!);
+    this.replace(currElIndex, leftPartIndex);
     this.array.stash[leftPartIndex] = null;
     currElIndex++;
     leftPartIndex++;

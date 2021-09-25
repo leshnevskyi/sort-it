@@ -46,7 +46,7 @@ class SortingLog<T> {
 }
 
 interface StashableArray<T> extends Array<T> {
-	stash: StashedElement<T>[];
+	stash: (StashedElement<T> | null)[];
 }
 
 interface StashableArrayElement<T> {
@@ -89,13 +89,13 @@ class StashedElement<T> {
 }
 
 interface SortFnContext<T> {
-  array: T[];
+  array: StashableArray<T>;
   listeners: SortFnListeners<T>; 
 	stash: (index: number) => StashedElement<T>;
   compare(firstIndex: number, secondIndex: number): number;
 	compare<T>(index: number, stashedEl: StashedElement<T>): number;
   swap(firstIndex: number, secondIndex: number): void;
-  replace(fromIndex: number, toIndex: number): void;
+  replace(replacedElIndex: number, replacementElIndex: number): void;
 	replace<T>(index: number, newValue: StashedElement<T>): void;
 }
 
@@ -117,7 +117,9 @@ const createSortFn = function(algorithm: Algorithm<any>) {
     }
 
     set array(array) {
-      this.#array = Object.assign(cloneDeep(array), {stash: []});
+      this.#array = Object.assign(cloneDeep(array), {
+				stash: Array(array.length).fill(null)
+			});
     }
 
 		stash(index: number) {
@@ -125,7 +127,7 @@ const createSortFn = function(algorithm: Algorithm<any>) {
 				index, this.#array[index], this.#array.stash.pop
 			);
 
-			this.#array.stash.push(stashedEl);
+			this.#array.stash[index] = stashedEl;
 
 			return stashedEl;
 		};
@@ -133,9 +135,11 @@ const createSortFn = function(algorithm: Algorithm<any>) {
     compare(firstIndex: number, secondIndex: number): number;
 		compare<T>(index: number, stashedEl: StashedElement<T>): number;
 		compare<T>(firstIndex: number, secondArg: number | StashedElement<T>) {
-      const comparisonResult = defaultCompareFn(
-        this.array[firstIndex], secondArg instanceof StashedElement 
-					? secondArg.value : this.array[secondArg]
+      const comparisonResult = defaultCompareFn<T>(
+        this.array.stash[firstIndex]?.value ?? this.array[firstIndex], 
+				secondArg instanceof StashedElement 
+					? secondArg.value 
+					: this.array.stash[secondArg]?.value ?? this.array[secondArg]
       );
 
       this.listeners.onCompare?.(
@@ -166,7 +170,7 @@ const createSortFn = function(algorithm: Algorithm<any>) {
       this.listeners.onSwap?.(firstIndex, secondIndex, this.arraySnapshot);
     }
 
-		replace(fromIndex: number, toIndex: number): void;
+		replace(replacedElIndex: number, replacementElIndex: number): void;
     replace<T>(index: number, newValue: StashedElement<T>): void;
 		replace<T>(index: number, secondArg: number | StashedElement<T>) {
 			const newValue = secondArg instanceof StashedElement 
@@ -179,6 +183,7 @@ const createSortFn = function(algorithm: Algorithm<any>) {
 
   const sortFn: SortFn = Object.assign(
 		<T>(array: T[]) => function(this: SortFnContext<T>, array: T[]) {
+				// @ts-ignore
 				this.array = array;
 				algorithm.call(this);
 

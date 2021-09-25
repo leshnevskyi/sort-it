@@ -3,6 +3,7 @@ import type {SortFn} from './utils';
 import bubbleSort from './bubbleSort';
 import selectionSort from './selectionSort';
 import shellSort from './shellSort';
+import mergeSort from './mergeSort';
 
 enum SortingAlgorithm {
   BubbleSort,
@@ -23,7 +24,7 @@ const sortingAlgorithms: SortingAlgorithmData[] = [
   {name: 'bubble', sortFn: bubbleSort},
   {name: 'selection', sortFn: selectionSort},
   {name: 'shell', sortFn: shellSort},
-  {name: 'merge', sortFn: shellSort},
+  {name: 'merge', sortFn: mergeSort},
   {name: 'quick', sortFn: shellSort},
   {name: 'counting', sortFn: shellSort},
 ].map(algorithm => ({...algorithm, url: `/${algorithm.name}-sort`}));

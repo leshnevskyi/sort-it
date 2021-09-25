@@ -38,7 +38,6 @@ function mergeSortAlgorithm<T>(
     } else {
       if (this.array.stash[leftPartIndex] !== null) {
         this.replace(currElIndex, leftPartIndex);
-        this.array.stash[leftPartIndex] = null;
       }
 
       leftPartIndex++;
@@ -51,7 +50,6 @@ function mergeSortAlgorithm<T>(
     !sortedElements.includes(this.array[currElIndex])
       && this.stash(currElIndex);
     this.replace(currElIndex, leftPartIndex);
-    this.array.stash[leftPartIndex] = null;
     currElIndex++;
     leftPartIndex++;
   }

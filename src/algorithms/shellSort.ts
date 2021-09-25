@@ -14,7 +14,6 @@ function shellSortAlgorithm<T>(this: SortFnContext<T>) {
       }
 
       this.replace(j, i);
-      this.array.stash[i] = null;
     }
   }
 }

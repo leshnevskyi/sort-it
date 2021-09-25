@@ -106,6 +106,10 @@ const createSortFn = function(algorithm: Algorithm<unknown>) {
 			this.#array.stash[index] = this.#array[index];
 		};
 
+		unstash(index: number) {
+			this.#array.stash[index] = null;
+		}
+
     compare(firstIndex: number, secondIndex: number): number {
       const comparisonResult = defaultCompareFn(
         this.array.stash[firstIndex] ?? this.array[firstIndex], 
@@ -141,8 +145,12 @@ const createSortFn = function(algorithm: Algorithm<unknown>) {
 		replace(replacedElIndex: number, replacingElIndex: number) {
 			const replacingValue = this.array.stash[replacingElIndex]
 				?? this.array[replacingElIndex];
+			const valueIsStashed = Boolean(
+				this.array.stash[replacingElIndex] !== null
+			);
 	
       this.array[replacedElIndex] = replacingValue;
+			valueIsStashed && this.unstash(replacingElIndex);
       this.listeners.onReplace?.(
 				replacedElIndex, replacingValue, this.arraySnapshot
 			);

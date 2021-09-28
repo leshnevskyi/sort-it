@@ -1,12 +1,13 @@
-import {random} from 'lodash-es';
+import {round, random} from 'lodash-es';
 
 function generateRandomNumbers(
   arrayLength: number,
   lowerBound: number = 0.05,
   upperBound: number = 1,
+  precision: number = 3
 ): number[] {
   return [...Array(arrayLength)].map(() => {
-    return random(lowerBound, upperBound, true);
+    return round(random(lowerBound, upperBound, true), precision);
   });
 }
 

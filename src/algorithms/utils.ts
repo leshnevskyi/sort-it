@@ -72,6 +72,7 @@ interface SortFn {
 
 interface SortFnContext<T> {
   array: StashableArray<T>;
+  arraySnapshot: T[];
   listeners: SortFnListeners<T>; 
 	stash: (index: number) => void;
   compare(firstIndex: number, secondIndex: number): number;

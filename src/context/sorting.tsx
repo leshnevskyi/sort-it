@@ -40,7 +40,7 @@ interface SortingProviderProps {
 }
 
 const SortingProvider = ({children}: SortingProviderProps) => {
-  const [arrayLength, setArrayLength] = useState(20);
+  const [arrayLength, setArrayLength] = useState(100);
   const [array, setArray] = useState(generateRandomNumbers(arrayLength));
   const [sortingLog, setSortingLog] = useState<
     SortingSnapshot<number>[] | null

@@ -5,6 +5,7 @@ import selectionSort from './selectionSort';
 import shellSort from './shellSort';
 import mergeSort from './mergeSort';
 import quickSort from './quickSort';
+import countingSort from './countingSort';
 
 enum SortingAlgorithm {
   BubbleSort,
@@ -27,7 +28,7 @@ const sortingAlgorithms: SortingAlgorithmData[] = [
   {name: 'shell', sortFn: shellSort},
   {name: 'merge', sortFn: mergeSort},
   {name: 'quick', sortFn: quickSort},
-  {name: 'counting', sortFn: shellSort},
+  {name: 'counting', sortFn: countingSort},
 ].map(algorithm => ({...algorithm, url: `/${algorithm.name}-sort`}));
 
 export {

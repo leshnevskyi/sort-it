@@ -7,7 +7,8 @@ const GlobalStyle = createGlobalStyle`
   ${fontFaces} // Load fonts
 
   :root {
-    --font-size-400: 2rem;
+    --font-size-300: 1.8rem;
+    --font-size-400: 2.1rem;
     --font-size-500: 2.3rem;
     --font-size-600: 2.6rem;
     --font-size-1000: 27rem;
@@ -35,6 +36,7 @@ const GlobalStyle = createGlobalStyle`
     color: var(--text-color);
     font-family: inherit;
     font-size: inherit;
+    font-weight: inherit;
   }
 
   body {
@@ -47,6 +49,13 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+  }
+
+  svg {
+    fill: var(--icon-color);
+    stroke: var(--icon-color);
+    stroke-width: 0;
+    transition: var(--normal-transition-duration);
   }
 
   #root {

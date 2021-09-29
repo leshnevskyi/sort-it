@@ -1,10 +1,18 @@
 import useEventListener from '@use-it/event-listener';
 
-import {ButtonContainer, StatusBarWrapper} from './styled';
-import {Button} from 'components/shared';
+import {
+  StatusBarWrapper, 
+  ButtonContainer, 
+  InfoBar,
+  Boldfaced,
+  Footer,
+  GitHubLink,
+} from './styled';
+import {Button, Text} from 'components/shared';
 import {ReactComponent as ShowChangelogIcon} from 'assets/icons/history.svg';
 import {ReactComponent as SortArrayIcon} from 'assets/icons/start.svg';
 import {ReactComponent as RegenerateArrayIcon} from 'assets/icons/repeat.svg';
+import {ReactComponent as GitHubLogo} from 'assets/logos/github.svg';
 
 import {useSorting} from 'hooks';
 
@@ -28,6 +36,15 @@ const StatusBar = () => {
           <RegenerateArrayIcon/>
         </Button>
       </ButtonContainer>
+      <InfoBar>
+        <Text>Sorted in: <Boldfaced>7ms</Boldfaced></Text>
+        <Text>To start again press <Boldfaced>Space</Boldfaced></Text>
+      </InfoBar>
+      <Footer>
+        <GitHubLink>
+          <GitHubLogo/>
+        </GitHubLink>
+      </Footer>
     </StatusBarWrapper>
   );
 }

@@ -44,7 +44,79 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const InfoBar = styled.div`
+  --text-color: ${colors.tiara};
+
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+  gap: 4rem;
+  font-size: var(--font-size-300);
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+`;
+
+const Boldfaced = styled.b`
+  --text-color: ${colors.wafer};
+
+  font-size: var(--font-size-400);
+  font-weight: 700;
+`;
+
+const Footer = styled.footer`
+  position: relative;
+  bottom: calc(0px - var(--v-padding) / 2);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const GitHubLink = styled.a.attrs({href: '//github.com/leshnevskyi/sort-it'})`
+  --icon-color: ${colors.wafer};
+
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /**
+   * A pseudo-element to increase the clickable area of the link.
+   */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: scaleY(2);
+  }
+
+  & > svg {
+    width: 50%;
+  }
+
+  &:hover {
+    --icon-color: ${colors.tiara};
+    --icon-stroke-width: 1px;
+    
+    & > svg {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px var(--icon-color));
+    }
+  }
+`;
+
 export {
   StatusBarWrapper,
   ButtonContainer,
+  InfoBar,
+  Boldfaced,
+  Footer,
+  GitHubLink,
 };

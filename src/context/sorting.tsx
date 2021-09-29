@@ -29,6 +29,10 @@ interface SortingContextValue<T> {
   setSortingAlgorithmIndex: React.Dispatch<React.SetStateAction<
     SortingAlgorithm
   >>;
+  sortingTime: DOMHighResTimeStamp | undefined;
+  setSortingTime: React.Dispatch<React.SetStateAction<
+    DOMHighResTimeStamp | undefined
+  >>;
 }
 
 const SortingContext = createContext<
@@ -51,6 +55,7 @@ const SortingProvider = ({children}: SortingProviderProps) => {
   const [sortingAlgorithmIndex, setSortingAlgorithmIndex] = useState(
     SortingAlgorithm.BubbleSort
   );
+  const [sortingTime, setSortingTime] = useState<DOMHighResTimeStamp>();
 
   return (
     <SortingContext.Provider 
@@ -62,6 +67,7 @@ const SortingProvider = ({children}: SortingProviderProps) => {
         sortingStage, setSortingStage,
         sortingSpeed, setSortingSpeed,
         sortingAlgorithmIndex, setSortingAlgorithmIndex,
+        sortingTime, setSortingTime,
       }}
     >
       {children}

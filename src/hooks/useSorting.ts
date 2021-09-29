@@ -1,4 +1,5 @@
 import {useContext, useMemo} from 'react';
+import {round} from 'lodash';
 
 import {SortingContext, SortingStage} from 'context/sorting';
 import {SortingLog, StashableArrayElement} from 'algorithms/utils';
@@ -22,6 +23,7 @@ function useSorting() {
     setCurrentIteration, 
     setSortingStage,
     sortingAlgorithmIndex,
+    setSortingTime,
   } = sortingContextValue;
   
   let sortFn = sortingAlgorithms[sortingAlgorithmIndex].sortFn;
@@ -47,7 +49,10 @@ function useSorting() {
   });
   
   function startSorting() {
+    const startTimeStamp = performance.now();
     sortFn(array);
+    const finishTimeStamp = performance.now();
+    setSortingTime(round(finishTimeStamp - startTimeStamp, 2));  
     setSortingStage(SortingStage.InProgress);
     setSortingLog(sortingLog.retrieve());
     setCurrentIteration(null);

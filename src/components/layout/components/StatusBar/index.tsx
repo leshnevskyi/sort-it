@@ -17,7 +17,7 @@ import {ReactComponent as GitHubLogo} from 'assets/logos/github.svg';
 import {useSorting} from 'hooks';
 
 const StatusBar = () => {
-  const {startSorting, regenerateArray} = useSorting();
+  const {startSorting, regenerateArray, sortingTime} = useSorting();
 
   useEventListener('keydown', (event: KeyboardEvent) => {
     if (event.code === 'Space') startSorting();
@@ -37,8 +37,15 @@ const StatusBar = () => {
         </Button>
       </ButtonContainer>
       <InfoBar>
-        <Text>Sorted in: <Boldfaced>7ms</Boldfaced></Text>
-        <Text>To start again press <Boldfaced>Space</Boldfaced></Text>
+        {sortingTime
+          ? <>
+              <Text>Sorted in: <Boldfaced>{sortingTime}ms</Boldfaced></Text>
+              <Text>To start again press <Boldfaced>Space</Boldfaced></Text>
+            </>
+          : <Text>
+              Let's see how long it takes! <Boldfaced>Sort it!</Boldfaced>
+            </Text>
+        }
       </InfoBar>
       <Footer>
         <GitHubLink>

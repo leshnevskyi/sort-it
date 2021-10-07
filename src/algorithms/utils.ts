@@ -66,14 +66,17 @@ interface SortFnListeners<T> {
 }
 
 interface SortFn {
-  <T>(array: T[]): T[];
+  <T>(array: T[], compareFn?: CompareFn<T>): T[];
   attachListeners: <T>(listeners: SortFnListeners<T>) => void;
 }
+
+type CompareFn<T> = (firstEl: T, secondEl: T) => number;
 
 interface SortFnContext<T> {
   array: StashableArray<T>;
   arraySnapshot: T[];
   listeners: SortFnListeners<T>; 
+  compareFn: CompareFn<T>;
 	stash: (index: number) => void;
   compare(firstIndex: number, secondIndex: number): number;
   swap(firstIndex: number, secondIndex: number): void;
@@ -85,7 +88,10 @@ type Algorithm<T> = (this: SortFnContext<T>) => void;
 const createSortFn = function(algorithm: Algorithm<unknown>) {
   const sortFnContext: SortFnContext<unknown> = new class 
   implements SortFnContext<unknown> {
-    #array: StashableArray<unknown> = Object.assign(Array<unknown>(), {stash: []}); 
+    #array: StashableArray<unknown> = Object.assign(
+      Array<unknown>(), {stash: []}
+    );
+    #compareFn: CompareFn<any> = defaultCompareFn; 
 
     listeners: SortFnListeners<unknown> = {}; 
 
@@ -103,6 +109,10 @@ const createSortFn = function(algorithm: Algorithm<unknown>) {
 			});
     }
 
+    set compareFn(compareFn: CompareFn<any>) {
+      this.#compareFn = compareFn;
+    }
+
 		stash(index: number) {
 			this.#array.stash[index] = this.#array[index];
 		};
@@ -112,7 +122,7 @@ const createSortFn = function(algorithm: Algorithm<unknown>) {
 		}
 
     compare(firstIndex: number, secondIndex: number): number {
-      const comparisonResult = defaultCompareFn(
+      const comparisonResult = this.#compareFn(
         this.array.stash[firstIndex] ?? this.array[firstIndex], 
 				this.array.stash[secondIndex] ?? this.array[secondIndex]
       );
@@ -159,9 +169,12 @@ const createSortFn = function(algorithm: Algorithm<unknown>) {
   }
 
   const sortFn: SortFn = Object.assign(
-		<T>(array: T[]) => function(this: SortFnContext<T>, array: T[]) {
+		<T>(
+      array: T[], compareFn?: CompareFn<T>
+    ) => function(this: SortFnContext<T>, array: T[]) {
 				// @ts-ignore
 				this.array = array;
+        compareFn && (this.compareFn = compareFn);
 				algorithm.call(this as SortFnContext<unknown>);
 
 				return this.array as T[];

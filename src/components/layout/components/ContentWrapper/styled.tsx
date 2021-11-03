@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {capitalize} from 'lodash';
 
 import colors from 'styles/colors';
 
@@ -14,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 interface BackgroundHeadingProps {
-  readonly algoName: string;
+  readonly text?: string;
 }
 
 const BackgroundHeading = styled.span<BackgroundHeadingProps>`
@@ -23,7 +22,7 @@ const BackgroundHeading = styled.span<BackgroundHeadingProps>`
   z-index: -10;
 
   &::before, &::after {
-    --text-size: ${props => `${props.algoName} sort`.length};
+    --text-size: ${props => `${props.text}`.length};
     --text-color: ${colors.pickledBluewood};
     --animation-speed: calc(var(--text-size) * 1s);
 
@@ -37,10 +36,11 @@ const BackgroundHeading = styled.span<BackgroundHeadingProps>`
       }
     }
 
-    content: '${props => capitalize(props.algoName)} Sort';
+    content: '${props => props.text}';
     position: absolute;
     font-size: var(--font-size-1000);
     font-weight: 900;
+    text-transform: capitalize;
     white-space: nowrap;
     animation: offset var(--animation-speed) infinite linear;
   }

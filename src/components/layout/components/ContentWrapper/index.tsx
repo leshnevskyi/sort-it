@@ -1,17 +1,17 @@
 import {BackgroundHeading, Wrapper} from './styled';
-import {useSorting} from 'hooks';
-import {sortingAlgorithms} from 'algorithms';
 
 interface ContentWrapperProps {
   children: React.ReactNode;
+  className?: string,
+  backgroundText?: string;
 }
 
-const ContentWrapper = ({children}: ContentWrapperProps) => {
-  const algoIndex = useSorting().sortingAlgorithmIndex;
-
+const ContentWrapper = ({
+  children, className, backgroundText
+}: ContentWrapperProps) => {
   return (
-    <Wrapper>
-      <BackgroundHeading algoName={sortingAlgorithms[algoIndex].name}/>
+    <Wrapper className={className}>
+      <BackgroundHeading text={backgroundText}/>
       {children}
     </Wrapper>
   );

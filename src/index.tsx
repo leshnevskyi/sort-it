@@ -25,7 +25,7 @@ const App = () => {
           <Redirect to='/bubble-sort'/>
         </Route>
         <ContentWrapper backgroundText={
-          `${sortingAlgorithms[sortingAlgorithmIndex].name} sort`
+          `${sortingAlgorithms[sortingAlgorithmIndex]?.name} sort`
         }>
           <NavBar/>
           <Bars/>

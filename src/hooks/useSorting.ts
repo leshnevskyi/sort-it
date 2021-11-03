@@ -26,11 +26,11 @@ function useSorting() {
     setSortingTime,
   } = sortingContextValue;
   
-  let sortFn = sortingAlgorithms[sortingAlgorithmIndex].sortFn;
+  let sortFn = sortingAlgorithms[sortingAlgorithmIndex]?.sortFn;
 
   const sortingLog = useMemo(() => new SortingLog(array), [array]);
 
-  sortFn.attachListeners({
+  sortFn?.attachListeners({
     onCompare: (firstEl, secondEl) => sortingLog.add({
       comparedElements: [firstEl, secondEl] as [
         StashableArrayElement<number>, StashableArrayElement<number>

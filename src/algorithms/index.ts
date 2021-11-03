@@ -34,7 +34,4 @@ const sortingAlgorithms: SortingAlgorithmData[] = [
 export {
   SortingAlgorithm, 
   sortingAlgorithms,
-  bubbleSort,
-  selectionSort,
-  shellSort,
 };

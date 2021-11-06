@@ -6,6 +6,7 @@ const colors = {
   wafer: '#dbc4bd',
   rodeoDust: '#c9a79c',
   sandyBrown: '#ed9a5e',
+  tacao: '#f0a975',
 };
 
 export default colors;

@@ -22,7 +22,7 @@ interface TextProps {
 const Text = styled.span<TextProps>`
   font-size: var(--font-size-${props => props.size});
   font-weight: ${props => props.weight};
-  ${props => props.color};
+  color: ${props => props.color};
 `;
 
 export {Button, Text};

@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import GlobalStyle from 'components/GlobalStyle';
+import {ComparisonSection} from 'components/comparison';
 import {Bars} from 'components/bars';
 import {ContentWrapper, NavBar, StatusBar} from 'components/layout';
 import {SortingProvider} from 'context/sorting';
@@ -21,9 +22,6 @@ const App = () => {
     <>
       <GlobalStyle/>
       <Router>
-        <Route exact path='/'>
-          <Redirect to='/bubble-sort'/>
-        </Route>
         <ContentWrapper backgroundText={
           `${sortingAlgorithms[sortingAlgorithmIndex]?.name} sort`
         }>
@@ -31,6 +29,12 @@ const App = () => {
           <Bars/>
         </ContentWrapper>
         <StatusBar/>
+        <Route exact path='/'>
+          <Redirect to='/bubble-sort'/>
+        </Route>
+        <Route exact path='/compare'>
+          <ComparisonSection/>
+        </Route>
       </Router>
     </>
   );

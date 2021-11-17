@@ -6,6 +6,7 @@ import colors from 'styles/colors';
 
 interface WrapperProps {
   value: number | null;
+  isOutOfRange: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -22,7 +23,8 @@ const Wrapper = styled.div<WrapperProps>`
   justify-content: space-between;
   writing-mode: vertical-lr;
   background: linear-gradient(
-    ${({value}) => value === 1 ? colors.white : colors.william}, transparent
+    ${({isOutOfRange}) => isOutOfRange ? colors.white : colors.william}, 
+    transparent
   );
 `;
 

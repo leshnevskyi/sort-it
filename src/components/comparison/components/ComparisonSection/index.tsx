@@ -1,10 +1,12 @@
 import {useState, useEffect} from 'react';
-import {round} from 'lodash';
+import {wrap} from 'comlink';
 
 import {Wrapper, BarContainer, Bar} from './components';
 
 import {sortingAlgorithms} from 'algorithms';
 import {generateRandomNumbers} from 'utils';
+
+import type {Api as SortingWorkerApi} from 'workers/sorting';
 
 const ComparisonSection = () => {
   const [arrayLength, setArrayLength] = useState(800);
@@ -12,24 +14,29 @@ const ComparisonSection = () => {
 
   useEffect(() => {
     setTimes(null);
-
     const randomNumbers = generateRandomNumbers(arrayLength);
 
-    const times = sortingAlgorithms.map(algoritm => {
-      const startTimeStamp = performance.now();
-      algoritm.sortFn(randomNumbers);
-      const finishTimeStamp = performance.now();
+    (async () => {
+      const times = await Promise.all(
+        sortingAlgorithms.map(async (_, algorithmIndex) => {
+          const worker = new Worker('workers/sorting', {type: 'module'});
+          const {sort, time} = wrap(worker) as unknown as SortingWorkerApi;
+          await sort(randomNumbers, algorithmIndex); 
+  
+          return time;
+        })
+      );
 
-      return round(finishTimeStamp - startTimeStamp, 2);
-    });
-
-    setTimes(times);
+      setTimes(times);
+    })();
   }, [arrayLength]);
 
   const renderedBars = sortingAlgorithms.map((algorithm, index) => {
-    const upperBoundTime = 100;
-    const maxTime = times && Math.min(Math.max(...times), upperBoundTime) || 0;
-    const minTime = times && Math.min(Math.min(...times), upperBoundTime) || 0;
+    const upperBoundTime = 1000;
+    const maxTime = times && (
+      Math.min(Math.max(...times), upperBoundTime)
+    ) || 0;
+    const minTime = 0;
 
     const getValue = (time: number) => {
       return time < upperBoundTime ? (time - minTime) / (maxTime - minTime) : 1;
@@ -40,6 +47,7 @@ const ComparisonSection = () => {
         caption={`${algorithm.name} sort`} 
         value={times ? getValue(times[index]) : 0}
         valueText={times && `${times[index]}ms`}
+        isOutOfRange={Boolean(times && times[index] > upperBoundTime)}
       />
     );
   });

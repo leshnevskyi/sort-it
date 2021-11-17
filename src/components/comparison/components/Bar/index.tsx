@@ -4,11 +4,12 @@ interface BarProps {
   caption: string;
   value: number | null;
   valueText: string | null;
+  isOutOfRange: boolean;
 }
 
-const Bar = ({caption, value, valueText}: BarProps) => {
+const Bar = ({caption, value, valueText, isOutOfRange}: BarProps) => {
   return (
-    <Wrapper value={value}>
+    <Wrapper value={value} isOutOfRange={isOutOfRange}>
       <Caption>{caption}</Caption>
       {valueText && <Value>{valueText}</Value>}
     </Wrapper>

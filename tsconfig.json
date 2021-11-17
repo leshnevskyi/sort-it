@@ -4,6 +4,7 @@
     "target": "esnext",
     "lib": [
       "dom",
+      "webworker",
       "dom.iterable",
       "esnext"
     ],

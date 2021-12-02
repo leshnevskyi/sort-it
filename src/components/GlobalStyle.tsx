@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     --bg-color: transparent;
 
+    appearance: none;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -37,6 +38,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
+    border: none;
+  }
+
+  *:focus {
+    outline: none;
   }
 
   body {

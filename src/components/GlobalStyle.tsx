@@ -57,6 +57,10 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   svg {
     fill: var(--icon-color);
     stroke: var(--icon-color);

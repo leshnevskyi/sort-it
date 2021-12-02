@@ -12,7 +12,7 @@ const Wrapper = styled.section`
   right: 0;
   display: flex;
   justify-content: center;
-  background: ${colors.sandyBrown};
+  background: ${colors.william};
 `;
 
 const BarContainer = styled(ContentWrapper)`
@@ -33,7 +33,7 @@ const BarContainer = styled(ContentWrapper)`
     width: calc(100% - 4 * var(--h-padding));
     height: 2px;
     display: flex;
-    background: ${colors.tacao};
+    background: ${colors.pickledBluewood};
   }
 `;
 

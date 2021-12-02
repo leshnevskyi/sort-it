@@ -23,7 +23,7 @@ const Wrapper = styled.div<WrapperProps>`
   justify-content: space-between;
   writing-mode: vertical-lr;
   background: linear-gradient(
-    ${({isOutOfRange}) => isOutOfRange ? colors.white : colors.william}, 
+    ${({isOutOfRange}) => isOutOfRange ? colors.wafer : colors.rodeoDust}, 
     transparent
   );
 `;
@@ -33,13 +33,13 @@ const BarText = styled(Text).attrs({size: 600, weight: 700})`
 `;
 
 const Caption = styled(BarText)`
-  --text-color: ${colors.sandyBrown};
+  --text-color: ${colors.william};
 
   text-transform: capitalize;
 `;
 
 const Value = styled(BarText)`
-  --text-color: ${colors.william};
+  --text-color: ${colors.rodeoDust};
 `;
 
 export {Wrapper, Caption, Value};

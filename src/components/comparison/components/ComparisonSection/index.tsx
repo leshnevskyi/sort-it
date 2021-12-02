@@ -1,7 +1,9 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {wrap} from 'comlink';
+import {debounce} from 'lodash';
 
-import {Wrapper, BarContainer, Bar} from './components';
+import {Wrapper, BarContainer, Bar, ButtonContainer} from './components';
+import {RangeInput} from 'components/shared';
 
 import {sortingAlgorithms} from 'algorithms';
 import {generateRandomNumbers} from 'utils';
@@ -9,7 +11,7 @@ import {generateRandomNumbers} from 'utils';
 import type {Api as SortingWorkerApi} from 'workers/sorting';
 
 const ComparisonSection = () => {
-  const [arrayLength, setArrayLength] = useState(800);
+  const [arrayLength, setArrayLength] = useState(777);
   const [times, setTimes] = useState<number[] | null>(null);
 
   useEffect(() => {
@@ -52,11 +54,21 @@ const ComparisonSection = () => {
     );
   });
 
+  const debouncedInputChangeHandler = useCallback(
+    debounce((value: number) => setArrayLength(value), 500), []
+  );
+
   return (
     <Wrapper>
       <BarContainer>
         {renderedBars}
       </BarContainer>
+      <ButtonContainer>
+        <RangeInput 
+          initialValue={arrayLength} 
+          onChange={debouncedInputChangeHandler}
+        />
+      </ButtonContainer>
     </Wrapper>
   );
 }

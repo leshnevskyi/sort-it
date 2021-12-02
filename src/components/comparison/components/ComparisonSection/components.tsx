@@ -37,5 +37,15 @@ const BarContainer = styled(ContentWrapper)`
   }
 `;
 
-export {Wrapper, BarContainer};
+const ButtonContainer = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: var(--v-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export {Wrapper, BarContainer, ButtonContainer};
 export {default as Bar} from '../Bar';
